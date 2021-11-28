@@ -8,14 +8,17 @@ type Usuario{
     email: String
     perfil: String
 }
-type Proyecto{
+type Proyecto{  
     lider: String
     facultad: String
+    nombre: String
+    
 }
 type Query{
     usuarios: [Usuario]
     usuario(identificacion: Int): Usuario
     proyectos:[Proyecto]
+    getProject: (nombre:String):Proyecto
 }
 `
 module.exports = typeDefs
