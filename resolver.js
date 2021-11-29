@@ -36,7 +36,7 @@ const resolvers = {
     },
     Mutation: {
         createUser: (parent, args, context, info) => {
-            const {clave} = args.user;
+            const { clave } = args.user;
             const nuevoUsuario = new User(args.user);
             //const buffer = Buffer.from(plaintext);
             const encryptedPlainText = aes256.encrypt(key, clave);
@@ -44,7 +44,14 @@ const resolvers = {
             return nuevoUsuario.save()
                 .then(u => "Usuario creado")
                 .catch(err => "fallo la creacion");
+        },
+        activeUser: (parent, args, context, info) => {
+            return User.updateOne({identificacion:args.identificacion},{estado:"Activo"})
+                .then(u => "Usuario Activo")
+                .catch(err => "Fallo la activacion");
+            
+        }
         }
     }
-}
+
 module.exports = resolvers
