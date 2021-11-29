@@ -35,14 +35,15 @@ const resolvers = {
         getProject: async (parent, args, context, info)=> await Project.findOne({nombre:args.nombre}),
     },
     Mutation: {
-        createUser: async (parent, args, context, info) => {
+        createUser: (parent, args, context, info) => {
             const {clave} = args.user;
             const nuevoUsuario = new User(args.user);
             //const buffer = Buffer.from(plaintext);
             const encryptedPlainText = aes256.encrypt(key, clave);
             nuevoUsuario.clave = encryptedPlainText
-            nuevoUsuario.save();
-            return "Usuario creado"
+            return nuevoUsuario.save()
+                .then(u => "Usuario creado")
+                .catch(err => "fallo la creacion");
         }
     }
 }
