@@ -11,14 +11,23 @@ type Usuario{
 type Proyecto{  
     lider: String
     facultad: String
-    nombre: String
+    
     
 }
 type Query{
     usuarios: [Usuario]
     usuario(identificacion: Int): Usuario
     proyectos:[Proyecto]
-    getProject: (nombre:String):Proyecto
+    getProject(nombre:String):Proyecto
+}
+input UserInput{
+    nombre: String
+    identificacion:Int
+    clave:String
+    perfil: String
+}
+type Mutation{
+    createUser(user:UserInput): String
 }
 `
 module.exports = typeDefs

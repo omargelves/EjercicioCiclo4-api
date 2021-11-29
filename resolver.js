@@ -1,4 +1,7 @@
 const Project = require('./model/proyectoModel')
+const User = require('./model/usuarioModel')
+var aes256 = require('aes256');
+
 const listUsuarios = [
     {
         nombre: 'Ramon Castaño',
@@ -22,7 +25,7 @@ const listUsuarios = [
         perfil: 'lider'
     },
 ]
-
+const key = 'CLAVEDIFICIL';
 
 const resolvers = {
     Query: {
@@ -31,5 +34,16 @@ const resolvers = {
         proyectos: async () => await Project.find({}),
         getProject: async (parent, args, context, info)=> await Project.findOne({nombre:args.nombre}),
     },
+    Mutation: {
+        createUser: async (parent, args, context, info) => {
+            const {clave} = args.user;
+            const nuevoUsuario = new User(args.user);
+            //const buffer = Buffer.from(plaintext);
+            const encryptedPlainText = aes256.encrypt(key, clave);
+            nuevoUsuario.clave = encryptedPlainText
+            nuevoUsuario.save();
+            return "Usuario creado"
+        }
+    }
 }
 module.exports = resolvers
