@@ -32,7 +32,7 @@ const resolvers = {
         usuarios: () => listUsuarios,
         usuario: (parent, args, context, info) => listUsuarios.find(user => user.identificacion === args.identificacion),
         proyectos: async () => await Project.find({}),
-        getProject: async (parent, args, context, info)=> await Project.findOne({nombre:args.nombre}),
+        getProject: async (parent, args, context, info) => await Project.findOne({ nombre: args.nombre }),
     },
     Mutation: {
         createUser: (parent, args, context, info) => {
@@ -46,7 +46,7 @@ const resolvers = {
                 .catch(err => "fallo la creacion");
         },
         activeUser: (parent, args, context, info) => {
-            return User.updateOne({identificacion:args.identificacion},{estado:"Activo"})
+            return User.updateOne({ identificacion: args.identificacion }, { estado: "Activo" })
                 .then(u => "Usuario Activo")
                 .catch(err => "Fallo la activacion");
             
@@ -60,8 +60,18 @@ const resolvers = {
             return Project.updateOne({ nombre: args.nombreProyecto }, { activo: false })
                 .then(u => "Proyecto 'eliminado'")
                 .catch(err => "Fallo la eliminacion");
-        }
+        },
+        insertUserToProject: (parent, args, context, info) => {
+            let user;
+            User.find({ identificacion: args, context, info })
+                .then(userBd => user = userBd)
+                .catch(err => console.log("Usuario inexistente"));
+            if (user && user.estado == "Activo") {
+                //suscripcion al proyect
+            } else {
+                return "Usuario no valido"
+            }
         }
     }
-
+}
 module.exports = resolvers

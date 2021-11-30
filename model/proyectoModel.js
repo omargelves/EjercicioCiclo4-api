@@ -5,7 +5,8 @@ const project = new Schema({
     lider: String,
     facultad: String,
     fechaInicio: { type: Date, default: new Date() },
-    activo: { type: Boolean, default: true }
+    activo: { type: Boolean, default: true },
+    integrantes: [Number]
 
 })
 module.exports = model('proyectos',project)
