@@ -1,9 +1,7 @@
 const { Schema, model} = require('mongoose')
 
-
-
 const project = new Schema({
-    nombre: { type: String, require: true },
+    nombre: { type: String, required: true, unique: true },
     lider: String,
     facultad: String,
     fechaInicio: { type: Date, default: new Date() },
