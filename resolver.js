@@ -50,6 +50,11 @@ const resolvers = {
                 .then(u => "Usuario Activo")
                 .catch(err => "Fallo la activacion");
             
+        },
+        deleteUser: (parent, args, context, info) => {
+            return User.deleteOne({ identificacion: args.ident })
+                .then(u => "Usuario eliminado")
+                .catch(err => "Fallo la eliminacion");
         }
         }
     }

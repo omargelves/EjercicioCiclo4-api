@@ -29,6 +29,7 @@ input UserInput{
 type Mutation{
     createUser(user:UserInput): String
     activeUser(identificacion:Int):String
+    deleteUser(ident:Int):String
 }
 `
 module.exports = typeDefs
